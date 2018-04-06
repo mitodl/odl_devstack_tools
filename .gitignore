@@ -1,0 +1,18 @@
+ssh/id_rsa
+ssh/id_rsa.pub
+configpatch/*.json
+docker-compose-*.yml
+!docker-compose-custom.yml
+
+
+# Pycharm
+.idea/
+
+### macOS template
+# General
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*

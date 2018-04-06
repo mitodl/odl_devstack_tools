@@ -1,0 +1,16 @@
+Example contents:
+
+{
+  "lms.env.json": [
+    {
+      "op": "add", 
+      "path": "/TOP_LEVEL_SETTING", 
+      "value": "some_value"
+    },
+    {
+      "op": "add", 
+      "path": "/FEATURES/SOME_FEATURE_NAME",
+      "value": true
+    }
+  ]
+}
