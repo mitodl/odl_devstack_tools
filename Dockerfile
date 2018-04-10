@@ -12,9 +12,9 @@ RUN echo "# My overrides" >> ~/.bashrc
 RUN echo "stty sane" >> ~/.bashrc
 
 RUN /bin/bash -c 'mkdir $HELPERDIR $HELPERDIR/configpatch $HELPERDIR/requirements && sudo chown -R edxapp:edxapp $HELPERDIR'
-RUN /bin/bash -c 'echo "###### USING VENV PIP ######"'
+COPY ./image_requirements.txt $HELPERDIR/requirements
 RUN /bin/bash -c 'cd $EDXAPPDIR && source $EDXAPPDIR/edxapp_env \
-  && /edx/app/edxapp/venvs/edxapp/bin/pip install pdbpp ipython jsonpatch --isolated'
+  && /edx/app/edxapp/venvs/edxapp/bin/pip install -r $HELPERDIR/requirements/image_requirements.txt --isolated'
   
 # Create course export directory (required for course export functionality)
 RUN /bin/bash -c 'mkdir $EDXVARDIR/export_course_repos && chown -R edxapp:edxapp $EDXVARDIR/export_course_repos'

@@ -1,5 +1,3 @@
-Example contents:
-
 {
   "lms.env.json": [
     {
@@ -9,8 +7,19 @@ Example contents:
     },
     {
       "op": "add", 
-      "path": "/FEATURES/SOME_FEATURE_NAME",
+      "path": "/FEATURES/ENABLE_SOMETHING",
       "value": true
+    },
+    {
+      "op": "remove", 
+      "path": "/SETTING_YOU_WANT_TO_REMOVE", 
+    }
+  ],
+  "cms.env.json": [
+    {
+      "op": "add", 
+      "path": "/TOP_LEVEL_CMS_SETTING", 
+      "value": "some_value"
     }
   ]
 }
