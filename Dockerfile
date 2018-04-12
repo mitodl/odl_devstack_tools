@@ -3,6 +3,7 @@ USER root
 
 ENV EDXAPPDIR=/edx/app/edxapp
 ENV EDXVARDIR=/edx/var/edxapp
+# Should match the DEVSTACK_CONTAINER_HELPER_DIR environment variable
 ENV HELPERDIR=$EDXAPPDIR/helper
 ENV CONTAINERSSHDIR=~/.ssh
 ENV HOSTSSHDIR=./ssh
