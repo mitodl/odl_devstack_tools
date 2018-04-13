@@ -30,6 +30,8 @@ CUSTOM_DEVSTACK_IMG_NAME='edxops/edxapp:odlcustom'
 CUSTOM_DEVSTACK_PATH="/path/to/odl_devstack_tools"
 # The path to helper files in the container. ***Do not change this value***
 DEVSTACK_CONTAINER_HELPER_DIR="/edx/app/edxapp/helper"
+# The path to the directory in the container where local repos will be mounted. ***Do not change this value***
+DEVSTACK_CONTAINER_MOUNT_DIR="/edx/app/edxapp/venvs/edxapp/src"
 ```
 
 When you have the latest images from edX (via `make pull` - more details 
@@ -89,7 +91,7 @@ Local repos can be mounted and installed in devstack containers by doing the fol
 - In your docker-compose file, add a environment variable with a name that starts with `ADDED_REQ_`, with the value
   being the package name (e.g.: `ADDED_REQ_XBLOCK=XBlock`) 
 - In your docker-compose file, mount your local repo directory alongside the `edx-platform` virtualenv packages 
-  (e.g.: /path/to/repo/XBlock:/edx/app/edxapp/venvs/edxapp/src/XBlock)
+  (e.g.: /path/to/repo/XBlock:${DEVSTACK_CONTAINER_MOUNT_DIR}/XBlock)
 
 ##### Detail
 
@@ -107,7 +109,7 @@ services:
     environment:
       - ADDED_REQ_XBLOCK=XBlock
     volumes:
-      - /path/to/repo/XBlock:/edx/app/edxapp/venvs/edxapp/src/XBlock
+      - /path/to/repo/XBlock:${DEVSTACK_CONTAINER_MOUNT_DIR}/XBlock
 ```
 
 ### Extras
