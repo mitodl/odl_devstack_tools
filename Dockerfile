@@ -19,11 +19,3 @@ RUN /bin/bash -c 'cd $EDXAPPDIR && source $EDXAPPDIR/edxapp_env \
   
 # Create course export directory (required for course export functionality)
 RUN /bin/bash -c 'mkdir $EDXVARDIR/export_course_repos && chown -R edxapp:edxapp $EDXVARDIR/export_course_repos'
-
-# Enable SSH access to github.mit.edu for Git course exports/imports
-COPY $HOSTSSHDIR/id_rsa $CONTAINERSSHDIR/
-COPY $HOSTSSHDIR/id_rsa.pub $CONTAINERSSHDIR/
-RUN /bin/bash -c 'touch $CONTAINERSSHDIR/known_hosts \
-  && chmod +w $CONTAINERSSHDIR/known_hosts \
-  && ssh-keyscan github.mit.edu >> $CONTAINERSSHDIR/known_hosts \
-  && sudo chown -R edxapp:edxapp $CONTAINERSSHDIR'
