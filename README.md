@@ -17,6 +17,9 @@ This repo provides some helpful tools for configuring and running [devstack](htt
   purposes (e.g.: one compose file for testing changes to `XBlock`, another one for testing changes to `edx-sga`, 
   another one for testing some LMS feature that requires a bunch of config changes). You can also combine them as 
   desired.
+- If desired, sets up your container to enable exporting courses to Github (specifically the 
+  github.mit.edu private repos) so you don't need to create SSH keys and add them to Github
+  every single time you restart your containers. 
  
 
 ### Configuring and using the custom devstack image
@@ -111,6 +114,18 @@ services:
     volumes:
       - /path/to/repo/XBlock:${DEVSTACK_CONTAINER_MOUNT_DIR}/XBlock
 ```
+
+
+### Enabling course content exporting to Github in Studio
+
+If you want to be able to export course content to github.mit.edu, follow these steps:
+
+1. On your **host machine**, generate an SSH key ([Github guide](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key))
+  and move the keys (`id_rsa` and `id_rsa.pub`) to `path/to/odl_devstack_tools/ssh`.
+  **NOTE**: Use your github.mit.edu email address and NO PASSPHRASE.
+1. Add that SSH key to your Github account ([guide](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)).
+1. Apply all the necessary JSON settings values and advanced course settings related
+  to course content exporting.
 
 ### Extras
 
