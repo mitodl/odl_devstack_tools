@@ -1,0 +1,15 @@
+version: "2.1"
+
+services:
+  lms:
+    environment:
+     - ADDED_REQ_SOCIAL_AUTH_XPRO=social-auth-mitxpro
+    volumes:
+      - ${CUSTOM_DEVSTACK_PATH}/configpatch/patch_socialxpro.json:${DEVSTACK_CONTAINER_HELPER_DIR}/configpatch/patch_socialxpro.json
+      - ${DEVPATH}/social-auth-mitxpro:${DEVSTACK_CONTAINER_MOUNT_DIR}/social-auth-mitxpro
+
+  studio:
+    environment:
+      - ADDED_REQ_SOCIAL_AUTH_XPRO=social-auth-mitxpro
+    volumes:
+      - ${DEVPATH}/social-auth-mitxpro:${DEVSTACK_CONTAINER_MOUNT_DIR}/social-auth-mitxpro

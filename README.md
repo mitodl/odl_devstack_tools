@@ -22,8 +22,10 @@ This repo provides some helpful tools for configuring and running [devstack](htt
   every single time you restart your containers. 
  
 
-### Configuring and using the custom devstack image
+### Usage
 
+##### 1) Set environment variables
+ 
 These environment variables will need to be set in your host machine (most likely in `~/.bash_profile`, et. al.):
 
 ```bash
@@ -37,6 +39,8 @@ DEVSTACK_CONTAINER_HELPER_DIR="/edx/app/edxapp/helper"
 DEVSTACK_CONTAINER_MOUNT_DIR="/edx/app/edxapp/venvs/edxapp/src"
 ```
 
+##### 2) Build custom image
+
 When you have the latest images from edX (via `make pull` - more details 
 [here](https://github.com/edx/devstack#using-the-latest-images)), you can run the following command to 
 create the new image based on edX's image.
@@ -44,6 +48,8 @@ create the new image based on edX's image.
 ```bash
 docker build $CUSTOM_DEVSTACK_PATH -t $CUSTOM_DEVSTACK_IMG_NAME --no-cache
 ```
+
+##### 3) Run devstack with the added compose file(s)
 
 To spin up the containers using the custom image and take advantage of the features described above,
 run `docker-compose up` like the commands below. For the sake of familiarity and consistency, these 
@@ -100,7 +106,8 @@ Local repos can be mounted and installed in devstack containers by doing the fol
 
 When hacking on or testing changes to some package that edX depends on, it's very helpful to mount and install your 
 local repo into the devstack containers. Among the benefits: (1) changes you make to those repos trigger a server
-restart automatically for LMS/Studio; (2) when you create a migration for one of those repos in the devstack container, 
+restart automatically for LMS/Studio (if your package can be installed as ["editable"](https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs)); 
+(2) when you create a migration for one of those repos in the devstack container, 
 the migration files are immediately available in your local repo.
 
 Running `docker-compose up` with the example docker-compose file below would automatically mount the `XBlock` repo 

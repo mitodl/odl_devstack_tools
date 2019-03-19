@@ -1,0 +1,21 @@
+{
+  "lms.env.json": [
+    {
+      "op": "replace",
+      "path": "/FEATURES/ENABLE_THIRD_PARTY_AUTH",
+      "value": true
+    },
+    {
+      "op": "add",
+      "path": "/THIRD_PARTY_AUTH_BACKENDS",
+      "value": ["social_auth_mitxpro.backends.MITxProOAuth2"]
+    }
+  ],
+  "lms.auth.json": [
+    {
+      "op": "add",
+      "path": "/SOCIAL_AUTH_OAUTH_SECRETS",
+      "value": {"mitxpro-oauth2": "<mitxpro_oauth2_application_client_secret>"}
+    }
+  ]
+}

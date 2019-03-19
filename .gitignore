@@ -1,7 +1,7 @@
 ssh/id_rsa
 ssh/id_rsa.pub
 configpatch/*.json
-docker-compose-*.yml
+/docker-compose-*.yml
 !docker-compose-custom.yml
 
 
