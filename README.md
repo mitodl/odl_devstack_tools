@@ -11,8 +11,8 @@ This repo provides some helpful tools for configuring and running [devstack](htt
 - Via docker-compose configuration, specify local repos that you want mounted 
   into the devstack containers and installed. 
   This is useful for testing changes in repos that devstack depends on (e.g.: `XBlock`, 
-  `xblock-utils`, `edx-sga`). Since they are installed via pip with the `-e` flag, the 
-  server restarts automatically when you make changes.
+  `xblock-utils`, `edx-sga`). If the packages use setuptools, they'll be installed via pip with the `-e` flag, so the 
+  server will restart automatically when you make changes to those packages locally.
 - Create any number of docker-compose files to take advantage of the features above for different
   purposes (e.g.: one compose file for testing changes to `XBlock`, another one for testing changes to `edx-sga`, 
   another one for testing some LMS feature that requires a bunch of config changes). You can also combine them as 
@@ -26,7 +26,7 @@ This repo provides some helpful tools for configuring and running [devstack](htt
 
 ##### 1) Set environment variables
  
-These environment variables will need to be set in your host machine (most likely in `~/.bash_profile`, et. al.):
+These environment variables will need to be set in your host machine (they can be added to `~/.bash_profile`, et. al.):
 
 ```bash
 # The name of the custom devstack image that will be built as a layer on top of the devstack image.
