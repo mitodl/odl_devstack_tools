@@ -30,7 +30,7 @@ while read var; do
     APP_VERSION=$(cat $repopath/pyproject.toml | perl -nle '/^version = "(.*)"$/ && print "$1";')
     CURRENT_VERSION_ARCHIVE="$repopath/dist/$APP_NAME-$APP_VERSION.tar.gz"
     if [[ -f $CURRENT_VERSION_ARCHIVE ]] ; then
-      echohighlight "  A built archive with the correct version was found ($CURRENT_VERSION_ARCHIVE)"
+      echohighlight "  A built archive with the correct version was found ($(basename $CURRENT_VERSION_ARCHIVE))"
       echohighlight "  Installing via archive..."
       pip install $CURRENT_VERSION_ARCHIVE
     else

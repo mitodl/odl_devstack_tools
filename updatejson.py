@@ -27,7 +27,7 @@ def handle(patch_filepath):
     try:
         patch_file_json = json.loads(patch_file_contents)
     except ValueError:
-        printstr('Patch file [{}] is cannot be parsed as JSON.'.format(patch_filepath), success=False)
+        printstr('Patch file [{}] cannot be parsed as JSON.'.format(patch_filepath), success=False)
         raise
     for target_filename, patch_json in patch_file_json.items():
         target_filepath = os.path.join(CONFIG_ROOT, target_filename)
