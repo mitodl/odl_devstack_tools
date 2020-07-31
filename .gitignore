@@ -4,7 +4,6 @@ configpatch/*.json
 /docker-compose-*.yml
 !docker-compose-custom.yml
 
-
 # Pycharm
 .idea/
 

@@ -31,6 +31,8 @@ These environment variables will need to be set in your host machine (most likel
 ```bash
 # The name of the custom devstack image that will be built as a layer on top of the devstack image.
 CUSTOM_DEVSTACK_IMG_NAME='edxops/edxapp:odlcustom'
+# The name of the existing devstack image on top of which your custom image will be based. Defaults to ""
+CUSTOM_DEVSTACK_BASE_IMG='edxops/edxapp:latest'
 # Path to this repo on your machine.
 CUSTOM_DEVSTACK_PATH="/path/to/odl_devstack_tools"
 # The path to helper files in the container. ***Do not change this value***
@@ -46,7 +48,7 @@ When you have the latest images from edX (via `make pull` - more details
 create the new image based on edX's image.
  
 ```bash
-docker build $CUSTOM_DEVSTACK_PATH -t $CUSTOM_DEVSTACK_IMG_NAME --no-cache
+docker build $CUSTOM_DEVSTACK_PATH -t $CUSTOM_DEVSTACK_IMG_NAME --build-arg BASE_IMG=$CUSTOM_DEVSTACK_BASE_IMG --no-cache
 ```
 
 ##### 3) Run devstack with the added compose file(s)

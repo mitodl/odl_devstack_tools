@@ -2,6 +2,8 @@ version: "2.1"
 
 services:
   lms:
+    build: .
+    image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
     volumes:
       - ${CUSTOM_DEVSTACK_PATH}/setup_custom_env.sh:${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh
       - ${CUSTOM_DEVSTACK_PATH}/updatejson.py:${DEVSTACK_CONTAINER_HELPER_DIR}/updatejson.py
@@ -10,9 +12,10 @@ services:
       source /edx/app/edxapp/edxapp_env &&
       ${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh &&
       while true; do python /edx/app/edxapp/edx-platform/manage.py lms runserver 0.0.0.0:18000 --insecure --settings devstack_docker; sleep 2; done'
-    image: ${CUSTOM_DEVSTACK_IMG_NAME}
     
   studio:
+    build: .
+    image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
     volumes:
       - ${CUSTOM_DEVSTACK_PATH}/setup_custom_env.sh:${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh
       - ${CUSTOM_DEVSTACK_PATH}/updatejson.py:${DEVSTACK_CONTAINER_HELPER_DIR}/updatejson.py
@@ -21,4 +24,3 @@ services:
       source /edx/app/edxapp/edxapp_env &&
       ${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh &&
       while true; do python /edx/app/edxapp/edx-platform/manage.py cms runserver 0.0.0.0:18010 --insecure --settings devstack_docker; sleep 2; done'
-    image: ${CUSTOM_DEVSTACK_IMG_NAME}

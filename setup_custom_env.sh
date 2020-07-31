@@ -29,6 +29,7 @@ while read var; do
     APP_NAME=$(cat $repopath/pyproject.toml | perl -nle '/^name = "(.*)"$/ && print "$1";')
     APP_VERSION=$(cat $repopath/pyproject.toml | perl -nle '/^version = "(.*)"$/ && print "$1";')
     CURRENT_VERSION_ARCHIVE="$repopath/dist/$APP_NAME-$APP_VERSION.tar.gz"
+    echohighlight "  NOTE: This is not being installed in 'editable' mode. Local updates to the package will not trigger a server restart."
     if [[ -f $CURRENT_VERSION_ARCHIVE ]] ; then
       echohighlight "  A built archive with the correct version was found ($(basename $CURRENT_VERSION_ARCHIVE))"
       echohighlight "  Installing via archive..."
