@@ -35,6 +35,9 @@ CUSTOM_DEVSTACK_IMG_NAME='edxops/edxapp:odlcustom'
 CUSTOM_DEVSTACK_BASE_IMG='edxops/edxapp:latest'
 # Path to this repo on your machine.
 CUSTOM_DEVSTACK_PATH="/path/to/odl_devstack_tools"
+# Set to "1" if you want your config changes to apply to the devstack YAML config files instead of JSON config files.
+# This is recommended for the Juniper release or any release more recent. 
+CUSTOM_DEVSTACK_USE_YAML_CONFIG=1
 # The path to helper files in the container. ***Do not change this value***
 DEVSTACK_CONTAINER_HELPER_DIR="/edx/app/edxapp/helper"
 # The path to the directory in the container where local repos will be mounted. ***Do not change this value***

@@ -2,8 +2,6 @@
 set -e -o pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# CONFIG_ROOT should be set after running `source /edx/app/edxapp/edxapp_env`
-CONFIG_ROOT=${CONFIG_ROOT:-"/edx/app/edxapp"}
 ADDED_REQUIREMENT_PREFIX="ADDED_REQ"
 REPO_MOUNT_DIR="/edx/app/edxapp/venvs/edxapp/src"
 
@@ -13,7 +11,7 @@ function echohighlight() {
 
 shopt -s nullglob
 for filepath in $SCRIPT_DIR/configpatch/*.json; do
-  python $SCRIPT_DIR/updatejson.py $filepath
+  python $SCRIPT_DIR/updateconfig.py $filepath
 done
 
 # Loop through extra pip requirements specified by env variables
