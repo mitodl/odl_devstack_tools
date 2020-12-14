@@ -16,6 +16,13 @@ for filepath in $SCRIPT_DIR/configpatch/*.json; do
   python $SCRIPT_DIR/updateconfig.py $filepath
 done
 
+# Loop through extra pip dependencies and install them (also indicated by env variables with a certain prefix)
+env | awk -F = '$1 ~ /^'$ADDED_PYPI_REQUIREMENT_PREFIX'_[a-zA-Z0-9_]*$/ { print $1 }' |
+while read var; do
+  echohighlight "Installing external package: ${!var}"
+  pip install ${!var}
+done
+
 # Loop through packages that were mounted to the file system in the container and should be installed via pip 
 # (These packages are specified by env variables with a certain prefix)
 repopath=
@@ -43,11 +50,4 @@ while read var; do
     # This package uses setuptools. Install in editable mode.
     pip install -e $repopath --ignore-installed --no-deps
   fi
-done
-
-# Loop through extra pip dependencies and install them (also indicated by env variables with a certain prefix)
-env | awk -F = '$1 ~ /^'$ADDED_PYPI_REQUIREMENT_PREFIX'_[a-zA-Z0-9_]*$/ { print $1 }' |
-while read var; do
-  echohighlight "Installing external package: ${!var}"
-  pip install ${!var}
 done

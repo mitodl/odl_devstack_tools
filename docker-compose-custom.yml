@@ -2,7 +2,6 @@ version: "2.1"
 
 services:
   lms:
-    build: .
     image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
     environment:
       - USE_YAML_CONFIG=${CUSTOM_DEVSTACK_USE_YAML_CONFIG}
@@ -16,7 +15,6 @@ services:
       while true; do python /edx/app/edxapp/edx-platform/manage.py lms runserver 0.0.0.0:18000 --insecure --settings devstack_docker; sleep 2; done'
     
   studio:
-    build: .
     image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
     volumes:
       - ${CUSTOM_DEVSTACK_PATH}/setup_custom_env.sh:${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh
