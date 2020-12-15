@@ -12,7 +12,7 @@ services:
       /bin/bash -c '
       source /edx/app/edxapp/edxapp_env &&
       ${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh &&
-      while true; do python /edx/app/edxapp/edx-platform/manage.py lms runserver 0.0.0.0:18000 --insecure --settings devstack_docker; sleep 2; done'
+      while true; do python /edx/app/edxapp/edx-platform/manage.py lms runserver 0.0.0.0:18000 --settings devstack_docker; sleep 2; done'
     
   studio:
     image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
@@ -25,4 +25,4 @@ services:
       /bin/bash -c '
       source /edx/app/edxapp/edxapp_env &&
       ${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh &&
-      while true; do python /edx/app/edxapp/edx-platform/manage.py cms runserver 0.0.0.0:18010 --insecure --settings devstack_docker; sleep 2; done'
+      while true; do python /edx/app/edxapp/edx-platform/manage.py cms runserver 0.0.0.0:18010 --settings devstack_docker; sleep 2; done'
