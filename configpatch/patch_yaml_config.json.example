@@ -1,0 +1,30 @@
+{
+  "lms.yml": [
+    {
+      "op": "add", 
+      "path": "/TOP_LEVEL_LMS_SETTING",
+      "value": "some_value"
+    },
+    {
+      "op": "add", 
+      "path": "/FEATURES/ENABLE_SOMETHING",
+      "value": true
+    },
+    {
+      "op": "replace",
+      "path": "/FEATURES/EXISTING_KEY_TO_REPLACE",
+      "value": false
+    },
+    {
+      "op": "remove", 
+      "path": "/SETTING_TO_REMOVE",
+    }
+  ],
+  "studio.yml": [
+    {
+      "op": "add", 
+      "path": "/TOP_LEVEL_STUDIO_SETTING",
+      "value": "some_value"
+    }
+  ]
+}

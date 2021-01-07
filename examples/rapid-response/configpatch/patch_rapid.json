@@ -1,0 +1,16 @@
+{
+  "lms.yml": [
+    {
+      "op": "add",
+      "path": "/ALLOW_ALL_ADVANCED_COMPONENTS",
+      "value": true
+    }
+  ],
+  "studio.yml": [
+    {
+      "op": "add",
+      "path": "/ALLOW_ALL_ADVANCED_COMPONENTS",
+      "value": true
+    }
+  ]
+}

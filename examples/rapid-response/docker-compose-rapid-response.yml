@@ -1,0 +1,16 @@
+version: "2.1"
+
+services:
+  lms:
+    environment:
+      - ADDED_REQ_RAPID=rapid-response-xblock
+    volumes:
+      - ${CUSTOM_DEVSTACK_PATH}/configpatch/patch_rapid.json:${DEVSTACK_CONTAINER_HELPER_DIR}/configpatch/patch_rapid.json
+      - ${DEVPATH}/rapid-response-xblock:${DEVSTACK_CONTAINER_MOUNT_DIR}/rapid-response-xblock
+
+  studio:
+    environment:
+      - ADDED_REQ_RAPID=rapid-response-xblock
+    volumes:
+      - ${CUSTOM_DEVSTACK_PATH}/configpatch/patch_rapid.json:${DEVSTACK_CONTAINER_HELPER_DIR}/configpatch/patch_rapid.json
+      - ${DEVPATH}/rapid-response-xblock:${DEVSTACK_CONTAINER_MOUNT_DIR}/rapid-response-xblock

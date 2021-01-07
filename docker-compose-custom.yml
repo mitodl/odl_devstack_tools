@@ -3,8 +3,6 @@ version: "2.1"
 services:
   lms:
     image: ${CUSTOM_DEVSTACK_IMG_NAME:-edxops/edxapp:odlcustom}
-    environment:
-      - USE_YAML_CONFIG=${CUSTOM_DEVSTACK_USE_YAML_CONFIG}
     volumes:
       - ${CUSTOM_DEVSTACK_PATH}/setup_custom_env.sh:${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh
       - ${CUSTOM_DEVSTACK_PATH}/updateconfig.py:${DEVSTACK_CONTAINER_HELPER_DIR}/updateconfig.py
@@ -19,8 +17,6 @@ services:
     volumes:
       - ${CUSTOM_DEVSTACK_PATH}/setup_custom_env.sh:${DEVSTACK_CONTAINER_HELPER_DIR}/setup_custom_env.sh
       - ${CUSTOM_DEVSTACK_PATH}/updateconfig.py:${DEVSTACK_CONTAINER_HELPER_DIR}/updateconfig.py
-    environment:
-      - USE_YAML_CONFIG=${CUSTOM_DEVSTACK_USE_YAML_CONFIG}
     command: >
       /bin/bash -c '
       source /edx/app/edxapp/edxapp_env &&

@@ -4,10 +4,11 @@ This repo provides some helpful tools for configuring and running [devstack](htt
 
 ### Features
 
-- Create a custom docker image (which is really just a layer on top of edX's 
-  devstack image) with some helpful packages already installed (e.g.: `pdbpp`)
+- Create a custom docker image (which is just a layer on top of edX's devstack image) with some helpful packages 
+  already installed (e.g.: `pdbpp`)
 - Automatically apply changes to the JSON config files in devstack when running the containers
-  (`lms.env.json`, `cms.env.json`, `lms.auth.json`, `cms.auth.json`).
+  (`lms.yml` or `studio.yml` for Juniper or later; `lms.env.json`, `cms.env.json`, `lms.auth.json`, or `cms.auth.json`
+  for every release before Juniper).
 - Via docker-compose configuration, specify local repos that you want mounted 
   into the devstack containers and installed. 
   This is useful for testing changes in repos that devstack depends on (e.g.: `XBlock`, 
@@ -30,14 +31,12 @@ These environment variables will need to be set in your host machine (they can b
 
 ```bash
 # The name of the custom devstack image that will be built as a layer on top of the devstack image.
-CUSTOM_DEVSTACK_IMG_NAME='edxops/edxapp:odlcustom'
-# The name of the existing devstack image on top of which your custom image will be based. Defaults to ""
-CUSTOM_DEVSTACK_BASE_IMG='edxops/edxapp:latest'
+CUSTOM_DEVSTACK_IMG_NAME="edxops/edxapp:odlcustom"
+# The name of the existing devstack image on top of which your custom image will be based. Defaults to 'edxops/edxapp:latest'
+CUSTOM_DEVSTACK_BASE_IMG="edxops/edxapp:latest"
 # Path to this repo on your machine.
 CUSTOM_DEVSTACK_PATH="/path/to/odl_devstack_tools"
-# Set to "1" if you want your config changes to apply to the devstack YAML config files instead of JSON config files.
-# This is recommended for the Juniper release or any release more recent. 
-CUSTOM_DEVSTACK_USE_YAML_CONFIG=1
+
 # The path to helper files in the container. ***Do not change this value***
 DEVSTACK_CONTAINER_HELPER_DIR="/edx/app/edxapp/helper"
 # The path to the directory in the container where local repos will be mounted. ***Do not change this value***
@@ -46,7 +45,7 @@ DEVSTACK_CONTAINER_MOUNT_DIR="/edx/app/edxapp/venvs/edxapp/src"
 
 ##### 2) Build custom image
 
-When you have the latest images from edX (via `make pull` - more details 
+When you have the latest images from edX (via `make dev.pull` - more details 
 [here](https://github.com/edx/devstack#using-the-latest-images)), you can run the following command to 
 create the new image based on edX's image.
  
@@ -68,23 +67,25 @@ docker-compose -f docker-compose.yml -f docker-compose-host.yml \
   -f $CUSTOM_DEVSTACK_PATH/docker-compose-custom.yml -f $CUSTOM_DEVSTACK_PATH/docker-compose-mine.yml up -d lms
 ```
 
-### Applying JSON config changes
+### Applying config changes
 
 ##### Summary
 
-Changes to JSON config values can be automatically applied when the container starts by doing the following:
+Changes to YML/JSON config values can be automatically applied when the container starts by doing the following:
 
-- Create a JSON patch file on your host machine in `./configpatch`
+- Create a JSON patch file in this repo's `./configpatch` directory _(NOTE: The files are written as JSON patches, but 
+  they will work as expected with YAML config files)_
 - In your custom docker-compose file, mount the JSON patch file into the 
   `${DEVSTACK_CONTAINER_HELPER_DIR}/configpatch/` directory in the container
 
 ##### Detail
 
 You can automatically apply changes to any of the devstack JSON config files 
-(`lms.env.json`, `cms.env.json`, `lms.auth.json`, `cms.auth.json`) by creating a patch file 
-in the `./configpatch` directory. These patch files should be `.json` type and in 
-[jsonpatch](http://jsonpatch.com/) format. The file name doesn't matter. See `./configpatch/patch.json.example` 
-for example usage.
+(`lms.yml` or `studio.yml` for Juniper or later; `lms.env.json`, `cms.env.json`, `lms.auth.json`, or `cms.auth.json`
+for every release before Juniper) by creating a patch file in the `./configpatch` directory. 
+These patch files should be `.json` type and in 
+[jsonpatch](http://jsonpatch.com/) format. The file name doesn't matter. See the `.example` files in the `./configpatch/` 
+directory for example usage.
 
 After the patch file is created, the patch file needs to be mounted into the container by adding to the `volume`
 section of your docker-compose file.

@@ -6,10 +6,16 @@ import sys
 import os
 
 
-# CONFIG_ROOT should be set in the env after `source /edx/app/edxapp/edxapp_env` is run within the container
-CONFIG_ROOT = os.getenv("CONFIG_ROOT", "/edx/app/edxapp")
+JSON_CONFIG_ROOT = os.getenv("JSON_CONFIG_ROOT", "/edx/app/edxapp")
 YAML_CONFIG_ROOT = os.getenv("YAML_CONFIG_ROOT", "/edx/etc")
-USE_YAML_CONFIG = os.getenv("USE_YAML_CONFIG", False)
+VALID_CONFIG_FILE_TARGETS = [
+    "lms.yml",
+    "studio.yml",
+    "lms.env.json",
+    "lms.auth.json",
+    "cms.env.json",
+    "cms.auth.json",
+]
 GREEN_TXT = "\033[92m"
 RED_TXT = "\033[31m"
 RESET_TXT = "\033[0;0m"
@@ -22,19 +28,12 @@ def printstr(s, success=True):
     sys.stdout.write(RESET_TXT)
 
 
-def should_use_yaml_config():
-    if isinstance(USE_YAML_CONFIG, bool):
-        return USE_YAML_CONFIG
-    elif isinstance(USE_YAML_CONFIG, str):
-        return USE_YAML_CONFIG.lower().strip() not in {"0", "", "false"}
-    elif isinstance(USE_YAML_CONFIG, int):
-        return USE_YAML_CONFIG != 0
+def is_yaml_config(target_filename):
+    return target_filename.endswith(".yml")
 
 
 def update_yaml_configs(target_filename, patch_json):
-    assert "lms." in target_filename or "cms." in target_filename
-    yaml_target_filename = "lms.yml" if "lms." in target_filename else "studio.yml"
-    target_filepath = os.path.join(YAML_CONFIG_ROOT, yaml_target_filename)
+    target_filepath = os.path.join(YAML_CONFIG_ROOT, target_filename)
     with open(target_filepath) as f:
         target_file_config = yaml.load(f.read())
     patch = JsonPatch(patch_json)
@@ -45,7 +44,7 @@ def update_yaml_configs(target_filename, patch_json):
 
 
 def update_json_configs(target_filename, patch_json):
-    target_filepath = os.path.join(CONFIG_ROOT, target_filename)
+    target_filepath = os.path.join(JSON_CONFIG_ROOT, target_filename)
     with open(target_filepath) as f:
         target_file_config = json.loads(f.read())
     patch = JsonPatch(patch_json)
@@ -67,7 +66,9 @@ def update_config_files(patch_filepath):
         printstr("Patch file [{}] cannot be parsed as JSON.".format(patch_filepath), success=False)
         raise
     for target_filename, patch_json in patch_file_json.items():
-        if should_use_yaml_config():
+        assert target_filename in VALID_CONFIG_FILE_TARGETS, \
+            "Invalid target config file ({}). Must be one of the following: {}".format(target_filename, VALID_CONFIG_FILE_TARGETS)
+        if is_yaml_config(target_filename):
             updated_config_filepath = update_yaml_configs(target_filename, patch_json)
         else:
             updated_config_filepath = update_json_configs(target_filename, patch_json)

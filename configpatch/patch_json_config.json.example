@@ -2,7 +2,7 @@
   "lms.env.json": [
     {
       "op": "add", 
-      "path": "/TOP_LEVEL_SETTING", 
+      "path": "/TOP_LEVEL_LMS_SETTING",
       "value": "some_value"
     },
     {
@@ -11,14 +11,19 @@
       "value": true
     },
     {
+      "op": "replace",
+      "path": "/FEATURES/EXISTING_KEY_TO_REPLACE",
+      "value": false
+    },
+    {
       "op": "remove", 
-      "path": "/SETTING_YOU_WANT_TO_REMOVE", 
+      "path": "/SETTING_TO_REMOVE",
     }
   ],
   "cms.env.json": [
     {
       "op": "add", 
-      "path": "/TOP_LEVEL_CMS_SETTING", 
+      "path": "/TOP_LEVEL_STUDIO_SETTING",
       "value": "some_value"
     }
   ]
