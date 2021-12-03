@@ -1,3 +1,5 @@
+**⚠️ WARNING (12/3/2021) ⚠️** –  _This project is not set up to work with the `maple` release of `edx-platform`, and possibly some earlier releases. If no one has the time to add support for later releases to this project, it's best to set up your local devstack the old-fashioned way (running a shell in LMS/Studio, then changing config settings and installing packages in there)_
+
 # ODL Devstack Tools
 
 This repo provides some helpful tools for configuring and running [devstack](https://github.com/edx/devstack) (edX's Docker-based solution for running Open edX services).
